@@ -12,6 +12,9 @@ args = parser.parse_args()
 import os
 import json
 from collections import Counter,defaultdict
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 # open the input path
 with open(args.input_path) as f:
@@ -26,3 +29,30 @@ if args.percent:
 items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
 for k,v in items:
     print(k,':',v)
+
+# Prepare lists to hold the keys and values for the top 10 items
+keys = []
+values = []
+for k, v in sorted(items[:10]):
+    keys.append(k)
+    values.append(v)
+
+# Create a bar chart with the top 10 items
+plt.bar(keys, values, color = "red")
+
+# Customize the plot title and x-axis labels based on the input file
+if args.input_path == "reduced.lang":
+    plt.title("# " + args.key + " by Language")
+    plt.xlabel("Language")
+
+if args.input_path == "reduced.country":
+    plt.title("# " + args.key + " by Country")
+    plt.xlabel("Country")
+
+
+plt.ylabel("Count")
+
+# Save the plot as a PNG file using a filename based on the input path and key
+plt.savefig(args.input_path + args.key + ".png")
+
+plt.show()
