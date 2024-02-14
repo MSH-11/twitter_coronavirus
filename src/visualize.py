@@ -27,32 +27,32 @@ if args.percent:
 
 # print the count values
 items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
+top_items = items[:10]
+
 for k,v in items:
     print(k,':',v)
 
-# Prepare lists to hold the keys and values for the top 10 items
-keys = []
-values = []
-for k, v in sorted(items[:10]):
-    keys.append(k)
-    values.append(v)
 
-# Create a bar chart with the top 10 items
-plt.bar(keys, values, color = "red")
+# Extracting keys and values for plotting
+keys = [item[0] for item in top_items][::-1]
+values = [item[1] for item in top_items][::-1]
 
-# Customize the plot title and x-axis labels based on the input file
-if args.input_path == "reduced.lang":
-    plt.title("# " + args.key + " by Language")
-    plt.xlabel("Language")
+# Create a bar graph
+plt.figure(figsize=(10, 6))
+plt.barh(keys, values, color='skyblue')
 
-if args.input_path == "reduced.country":
-    plt.title("# " + args.key + " by Country")
-    plt.xlabel("Country")
+if args.input_path[-1] == 'g':
+    plt.xlabel('language')
+    plt.title(f'Number of Tweets including {args.key} by language')
+else:
+    plt.xlabel('country')
+    plt.title(f'Number of Tweets including {args.key} by country')
 
+plt.ylabel('Count')
 
-plt.ylabel("Count")
+# Save the plot to a PNG file
+if args.input_path[-1] == 'g':
+    plt.savefig(f'{args.key}_language.png')
+else:
+    plt.savefig(f'{args.key}_country.png')
 
-# Save the plot as a PNG file using a filename based on the input path and key
-plt.savefig(args.input_path + args.key + ".png")
-
-plt.show()
