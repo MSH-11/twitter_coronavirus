@@ -34,12 +34,11 @@ for k,v in items:
 
 
 # Extracting keys and values for plotting
-keys = [item[0] for item in top_items][::-1]
-values = [item[1] for item in top_items][::-1]
+keys = [item[0] for item in top_items]
+values = [item[1] for item in top_items]
 
 # Create a bar graph
-plt.figure(figsize=(10, 6))
-plt.barh(keys, values, color='skyblue')
+plt.bar(keys, values)
 
 if args.input_path[-1] == 'g':
     plt.xlabel('language')
