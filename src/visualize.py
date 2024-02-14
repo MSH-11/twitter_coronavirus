@@ -34,8 +34,8 @@ for k,v in items:
 
 
 # Extracting keys and values for plotting
-keys = [item[0] for item in top_items]
-values = [item[1] for item in top_items]
+keys = [item[0] for item in top_items][::-1]
+values = [item[1] for item in top_items][::-1]
 
 # Create a bar graph
 plt.bar(range(len(keys)), values)
