@@ -38,7 +38,8 @@ keys = [item[0] for item in top_items]
 values = [item[1] for item in top_items]
 
 # Create a bar graph
-plt.bar(keys, values)
+plt.bar(range(len(keys)), values)
+plt.xticks(range(len(keys)), keys)
 
 if args.input_path[-1] == 'g':
     plt.xlabel('language')
